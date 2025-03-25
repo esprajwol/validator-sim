@@ -8,6 +8,18 @@ const port = process.env.PORT || 8000
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use(function (req, res, next) {
+    const token = req.headers["token"];
+    if (token) {
+        if (token == "valid") {
+            res.json({ success: true });
+        }
+        res.json({ success: false });
+    } else {
+        res.json({ success: false });
+    }
+});
+
 app.get("/", (_, res) => {
     return res.json({ success: true });
 })
